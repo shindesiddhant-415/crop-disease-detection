@@ -1,0 +1,55 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:6.0
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  ml-model:
+    build:
+      context: ./ml-model
+    environment:
+      - PORT=5000
+      - MODEL_PATH=model.pth
+      - MAX_CONTENT_LENGTH=5242880
+      - GEMINI_API_KEY
+    ports:
+      - '5000:5000'
+    restart: unless-stopped
+    depends_on:
+      - mongo
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongo:27017/crop-disease
+      - ML_API_URL=http://ml-model:5000
+    ports:
+      - '3000:3000'
+    volumes:
+      - backend-uploads:/app/uploads
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - ml-model
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:3000
+    ports:
+      - '8080:80'
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
+  backend-uploads:

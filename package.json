@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "node start.js",
+    "start": "npm run dev",
+    "lint:frontend": "cd frontend && npm run lint"
+  },
+  "dependencies": {
+    "axios": "^1.14.0",
+    "lucide-react": "^1.7.0",
+    "react-router-dom": "^7.13.2"
+  }
+}
