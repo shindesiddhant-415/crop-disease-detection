@@ -101,8 +101,15 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
 
     const result = flaskResponse.data;
 
-    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-    console.log('Saving prediction with image URL:', imageUrl);
+    // Read the file as Base64
+    const fileBuffer = fs.readFileSync(imagePath);
+    const base64Image = `data:${req.file.mimetype};base64,${fileBuffer.toString('base64')}`;
+    
+    // Clean up temporary file to save disk space
+    fs.unlinkSync(imagePath);
+
+    const imageUrl = base64Image;
+    console.log('Saving prediction with Base64 image data');
 
     const newPrediction = new HistoryModel({
       disease: result.disease,

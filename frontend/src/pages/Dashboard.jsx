@@ -111,7 +111,7 @@ export default function Dashboard() {
                     <div style={{ width: '80px', height: '80px', overflow: 'hidden', borderRadius: '0.5rem', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <img
                         src={
-                          (item.imageUrl || item.image)?.startsWith("http")
+                          ((item.imageUrl || item.image)?.startsWith("http") || (item.imageUrl || item.image)?.startsWith("data:"))
                             ? (item.imageUrl || item.image)
                             : `https://crop-backend-production.up.railway.app/${item.imageUrl || item.image}`
                         }
