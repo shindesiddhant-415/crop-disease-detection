@@ -16,8 +16,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/crop-disease';
-const flaskApiUrl = process.env.ML_API_URL || 'http://127.0.0.1:5000';
+const mongoURI =
+ process.env.MONGO_URI ||
+ 'mongodb://127.0.0.1:27017/crop-disease';
+
+const flaskApiUrl =
+ process.env.ML_API_URL ||
+ 'http://127.0.0.1:5000';
 
 console.log('Starting backend with configuration:');
 console.log('  PORT =', process.env.PORT || 3000);
