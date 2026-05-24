@@ -108,7 +108,14 @@ export default function Dashboard() {
                 <tr key={item._id} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                   <td style={{ padding: '1rem' }}>{new Date(item.timestamp).toLocaleDateString()}</td>
                   <td style={{ padding: '1rem' }}>
-                    <img src={`${API_URL}${item.imageUrl}`} alt="crop" style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '0.25rem' }} />
+                    <img
+                      src={item.imageUrl}
+                      alt="crop"
+                      style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '0.25rem' }}
+                      onError={(e)=>{
+                        e.target.src="/placeholder.png"
+                      }}
+                    />
                   </td>
                   <td style={{ padding: '1rem', fontWeight: 'bold' }}>{item.disease}</td>
                   <td style={{ padding: '1rem' }}>{item.confidence}%</td>

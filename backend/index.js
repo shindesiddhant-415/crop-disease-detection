@@ -106,7 +106,7 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
       confidence: result.confidence,
       severity: result.severity,
       treatment: result.treatment,
-      imageUrl: `/uploads/${req.file.filename}`
+      imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
     });
 
     await newPrediction.save();
