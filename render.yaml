@@ -9,6 +9,9 @@ services:
     env: docker
     dockerfilePath: ./backend/Dockerfile
     envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://shindesiddhant415_db_user:siddhant415@crop0.cpijdjj.mongodb.net/cropdb?retryWrites=true&w=majority
+
       - key: ML_URL
         value: https://crop-ml.onrender.com
 
@@ -16,3 +19,4 @@ services:
     name: crop-ml
     env: docker
     dockerfilePath: ./ml-model/Dockerfile
+
