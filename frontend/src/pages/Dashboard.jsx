@@ -107,8 +107,8 @@ export default function Dashboard() {
               {history.map((item) => (
                 <tr key={item._id} className="h-24" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                   <td style={{ padding: '1rem' }}>{new Date(item.timestamp).toLocaleDateString()}</td>
-                  <td className="w-24 h-24">
-                    <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded border">
+                  <td className="py-3">
+                    <div className="w-20 h-20 overflow-hidden rounded-lg border flex items-center justify-center">
                       <img
                         src={
                           item.imageUrl?.startsWith("http")
@@ -117,9 +117,6 @@ export default function Dashboard() {
                         }
                         alt="crop"
                         className="w-full h-full object-cover"
-                        onError={(e)=>{
-                          e.target.src="/demo_images/healthy.png"
-                        }}
                       />
                     </div>
                   </td>
