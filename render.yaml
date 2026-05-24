@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: crop-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+
+  - type: web
+    name: crop-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: ML_URL
+        value: https://crop-ml.onrender.com
+
+  - type: web
+    name: crop-ml
+    env: docker
+    dockerfilePath: ./ml-model/Dockerfile
