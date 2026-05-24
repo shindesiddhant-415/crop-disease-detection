@@ -44,13 +44,13 @@ function freePort(port) {
 }
 
 // Clean up ports 5000, 3000, and 5173
-console.log('🧹 Cleaning up ports (5000, 3000, 5173)...');
+console.log(' Cleaning up ports (5000, 3000, 5173)...');
 freePort(5000);
 freePort(3000);
 freePort(5173);
 
 // Spawn ML Model API
-console.log('\n🔥 Starting Flask ML API on port 5000...');
+console.log('\n Starting Flask ML API on port 5000...');
 const mlProcess = spawn('python', ['app.py'], {
   cwd: mlDir,
   stdio: 'inherit',
@@ -58,7 +58,7 @@ const mlProcess = spawn('python', ['app.py'], {
 });
 
 // Spawn Node Backend API
-console.log('📦 Starting Node.js Backend on port 3000...');
+console.log(' Starting Node.js Backend on port 3000...');
 const backendProcess = spawn('node', ['index.js'], {
   cwd: backendDir,
   stdio: 'inherit',

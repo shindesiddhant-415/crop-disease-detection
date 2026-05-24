@@ -10,7 +10,7 @@ export default function Contact() {
 
       <div className="glass-panel" style={{ padding: '3rem', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
         <h2 style={{ color: 'var(--primary-dark)', marginBottom: '1rem' }}>MIT Academy of Engineering</h2>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>School of Computer Engineering - Final Year Project</p>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>School of Computer Engineering - SY project</p>
 
         <h3 style={{ color: 'var(--primary)', marginBottom: '1rem' }}>Team Members</h3>
         <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2rem', fontSize: '1.1rem' }}>

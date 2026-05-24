@@ -1,6 +1,6 @@
 # Smart Crop Disease Detection System
 
-A Final Year Project for MIT Academy of Engineering, School of Computer Engineering.
+A SY project for MIT Academy of Engineering, School of Computer Engineering.
 This is a complete MERN-like stack (React, Node, MongoDB) combined with a Python Machine Learning component (Flask + PyTorch MobileNetV2 Transfer Learning CNN) that analyzes crop leaves for diseases.
 
 ## Architecture & Workflow
