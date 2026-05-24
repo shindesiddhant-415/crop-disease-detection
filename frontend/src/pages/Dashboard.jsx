@@ -105,21 +105,23 @@ export default function Dashboard() {
             </thead>
             <tbody>
               {history.map((item) => (
-                <tr key={item._id} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                <tr key={item._id} className="h-24" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
                   <td style={{ padding: '1rem' }}>{new Date(item.timestamp).toLocaleDateString()}</td>
-                  <td style={{ padding: '1rem' }}>
-                    <img
-                      src={
-                        item.imageUrl?.startsWith("http")
-                          ? item.imageUrl
-                          : `https://crop-backend-production.up.railway.app/${item.imageUrl}`
-                      }
-                      alt="crop"
-                      style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '0.25rem' }}
-                      onError={(e)=>{
-                        e.target.src="/placeholder.png"
-                      }}
-                    />
+                  <td className="w-24 h-24">
+                    <div className="w-16 h-16 flex items-center justify-center overflow-hidden rounded border">
+                      <img
+                        src={
+                          item.imageUrl?.startsWith("http")
+                            ? item.imageUrl
+                            : `https://crop-backend-production.up.railway.app/${item.imageUrl}`
+                        }
+                        alt="crop"
+                        className="w-full h-full object-cover"
+                        onError={(e)=>{
+                          e.target.src="/demo_images/healthy.png"
+                        }}
+                      />
+                    </div>
                   </td>
                   <td style={{ padding: '1rem', fontWeight: 'bold' }}>{item.disease}</td>
                   <td style={{ padding: '1rem' }}>{item.confidence}%</td>
