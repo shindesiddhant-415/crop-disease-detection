@@ -101,12 +101,15 @@ app.post('/api/predict', upload.single('image'), async (req, res) => {
 
     const result = flaskResponse.data;
 
+    const imageUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    console.log('Saving prediction with image URL:', imageUrl);
+
     const newPrediction = new HistoryModel({
       disease: result.disease,
       confidence: result.confidence,
       severity: result.severity,
       treatment: result.treatment,
-      imageUrl: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+      imageUrl: imageUrl
     });
 
     await newPrediction.save();

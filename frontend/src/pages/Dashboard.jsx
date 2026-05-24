@@ -105,18 +105,18 @@ export default function Dashboard() {
             </thead>
             <tbody>
               {history.map((item) => (
-                <tr key={item._id} className="h-24" style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                <tr key={item._id} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)', height: '96px' }}>
                   <td style={{ padding: '1rem' }}>{new Date(item.timestamp).toLocaleDateString()}</td>
-                  <td className="py-3">
-                    <div className="w-20 h-20 overflow-hidden rounded-lg border flex items-center justify-center">
+                  <td style={{ padding: '1rem' }}>
+                    <div style={{ width: '80px', height: '80px', overflow: 'hidden', borderRadius: '0.5rem', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <img
                         src={
-                          item.imageUrl?.startsWith("http")
-                            ? item.imageUrl
-                            : `https://crop-backend-production.up.railway.app/${item.imageUrl}`
+                          (item.imageUrl || item.image)?.startsWith("http")
+                            ? (item.imageUrl || item.image)
+                            : `https://crop-backend-production.up.railway.app/${item.imageUrl || item.image}`
                         }
                         alt="crop"
-                        className="w-full h-full object-cover"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     </div>
                   </td>
