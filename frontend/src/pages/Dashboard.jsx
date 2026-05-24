@@ -109,7 +109,11 @@ export default function Dashboard() {
                   <td style={{ padding: '1rem' }}>{new Date(item.timestamp).toLocaleDateString()}</td>
                   <td style={{ padding: '1rem' }}>
                     <img
-                      src={item.imageUrl}
+                      src={
+                        item.imageUrl?.startsWith("http")
+                          ? item.imageUrl
+                          : `https://crop-backend-production.up.railway.app/${item.imageUrl}`
+                      }
                       alt="crop"
                       style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '0.25rem' }}
                       onError={(e)=>{
