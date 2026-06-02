@@ -1,176 +1,349 @@
 # Smart Crop Disease Detection System
 
 A SY project for MIT Academy of Engineering, School of Computer Engineering.
-This is a complete MERN-like stack (React, Node, MongoDB) combined with a Python Machine Learning component (Flask + PyTorch MobileNetV2 Transfer Learning CNN) that analyzes crop leaves for diseases.
 
-## Architecture & Workflow
+This is a complete MERN-like stack (React, Node.js, MongoDB) integrated with a Python Machine Learning component (Flask + PyTorch MobileNetV2 Transfer Learning CNN) that analyzes crop leaf images and detects diseases with treatment recommendations.
 
-1. **User (Farmer) Uploads Image**: Using the React UI.
-2. **React -> Node.js**: Frontend sends FormData containing the image to the Node API (`/api/predict`).
-3. **Node.js -> Flask**: Node saves the file locally using `multer` and proxies the image to the Python API (`/infer`).
-4. **Flask (Machine Learning)**: 
-   - Receives image and resizes it to 224x224.
-   - Converts to numpy array and normalizes pixel values.
-   - Passes image through the `model.pth` CNN (Convolutional Neural Network).
-   - Generates confidence score and predicted class.
-   - Determines severity and action plan / treatment.
-5. **Flask -> Node.js**: Result JSON returned to Node.
-6. **Node.js -> MongoDB**: Prediction is saved in MongoDB for historical tracking.
-7. **Node.js -> React**: Final result is displayed natively in UI with colored severity tags.
+## 🌐 Live Demo
 
-## Installation & Running
+**Deployed Application:**
+https://crop-frontend-production.up.railway.app/
 
-This project runs as three separate services:
-- `ml-model` (Flask + PyTorch inference)
-- `backend` (Node.js + Express + MongoDB)
-- `frontend` (Vite + React)
+## 🚀 Features
 
-You can run everything from the root using the helper script, or start each service independently.
+* Upload crop leaf images for disease detection
+* Deep Learning model using MobileNetV2 Transfer Learning
+* Confidence score and disease prediction
+* Severity analysis and treatment recommendations
+* MongoDB prediction history tracking
+* Responsive React frontend
+* REST API architecture
+* Docker support for deployment
 
-### Prerequisites
-- Node.js 18+ and npm
-- Python 3.10+ with `pip`
-- MongoDB (local or remote URI)
+---
 
-### Environment Configuration
-Each service supports `.env` files. Example files are provided in:
-- `backend/.env.example`
-- `frontend/.env.example`
-- `ml-model/.env.example`
+# Architecture & Workflow
 
-Copy the file to `.env` and update values before running.
+1. **User (Farmer) Uploads Image** using the React UI.
+2. **React → Node.js Backend** sends image through FormData to `/api/predict`.
+3. **Node.js → Flask ML Service** forwards the image for inference.
+4. **Flask Model Processing**
 
-### Run from root
+   * Resizes image to 224×224
+   * Converts image to NumPy array
+   * Normalizes pixel values
+   * Runs inference using MobileNetV2 CNN
+   * Generates confidence score and disease prediction
+   * Determines severity level and treatment plan
+5. **Flask → Node.js** returns prediction JSON.
+6. **Node.js → MongoDB** stores prediction history.
+7. **Node.js → React** displays results with severity indicators.
+
+---
+
+# Tech Stack
+
+### Frontend
+
+* React.js
+* Vite
+* Axios
+* CSS
+
+### Backend
+
+* Node.js
+* Express.js
+* Multer
+
+### Database
+
+* MongoDB
+
+### Machine Learning
+
+* Python
+* Flask
+* PyTorch
+* MobileNetV2
+
+### Deployment
+
+* Railway
+* Docker
+
+---
+
+# Project Structure
+
+```text
+Smart-Crop-Disease-Detection/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── backend/
+│   ├── routes/
+│   ├── models/
+│   ├── uploads/
+│   └── package.json
+│
+├── ml-model/
+│   ├── app.py
+│   ├── train.py
+│   ├── model.pth
+│   └── requirements.txt
+│
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+# Installation & Running
+
+The project consists of three services:
+
+* Frontend (React)
+* Backend (Node.js + Express)
+* Machine Learning Service (Flask + PyTorch)
+
+## Prerequisites
+
+* Node.js 18+
+* Python 3.10+
+* MongoDB
+* Docker (optional)
+
+---
+
+# Environment Configuration
+
+Each service supports `.env` files.
+
+### Backend
+
+```env
+PORT=3000
+MONGO_URI=your_mongodb_uri
+ML_API_URL=http://localhost:5000
+```
+
+### Frontend
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+### ML Model
+
+```env
+PORT=5000
+MODEL_PATH=model.pth
+GEMINI_API_KEY=your_api_key
+```
+
+---
+
+# Run from Root
+
 ```bash
 npm install
 npm run install:all
 npm run dev
 ```
 
-### Run with Docker Compose (recommended)
-This repository includes a `docker-compose.yml` that builds and runs all services together.
+---
 
-- Frontend: http://localhost:8080
-- Backend API: http://localhost:3000
-- ML inference: http://localhost:5000
-- MongoDB: mongodb://localhost:27017
+# Docker Deployment
 
-If you want to override service environment values, copy the example files:
-- `backend/.env.example` → `backend/.env`
-- `frontend/.env.example` → `frontend/.env`
-- `ml-model/.env.example` → `ml-model/.env`
+Build and run all services:
 
-Then run:
 ```bash
 docker compose up --build
 ```
 
-To stop and remove containers:
+Stop containers:
+
 ```bash
 docker compose down
 ```
 
-If your Docker installation still uses the old CLI, replace `docker compose` with `docker-compose`.
+Rebuild after updates:
 
-### Redeploy after updates
-When you change code or add a new model, rebuild and restart the containers:
 ```bash
 docker compose up -d --build
 ```
-If you want a full cleanup before redeploying, use:
+
+Full cleanup:
+
 ```bash
 docker compose down -v
 docker compose up -d --build
 ```
 
-### Start services individually
+---
 
-#### ML Model Service
+# Run Services Individually
+
+## ML Service
+
 ```bash
 cd ml-model
 pip install -r requirements.txt
 python app.py
 ```
-- Default: `http://0.0.0.0:5000`
-- Use `PORT`, `MODEL_PATH`, and `GEMINI_API_KEY` in `ml-model/.env`
 
-#### Backend API
+Default URL:
+
+```text
+http://localhost:5000
+```
+
+---
+
+## Backend
+
 ```bash
 cd backend
 npm install
 npm run dev
 ```
-- Default: `http://localhost:3000`
-- Uses `backend/.env` values for `PORT`, `MONGO_URI`, `ML_API_URL`
-- Defaults to local MongoDB at `mongodb://127.0.0.1:27017/crop-disease` if no `MONGO_URI` is set
 
-#### Frontend React
+Default URL:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-- Default: `http://localhost:5173`
-- Uses `VITE_API_URL` from `frontend/.env`
 
-## How to Train Machine Learning Model
-Inside `/ml-model/train.py`, there is a complete script utilizing Image Data Generators and CNN sequential logic.
-1. Place the PlantVillage Dataset into `/ml-model/dataset/` under Folders (`Healthy`, `Early_Blight`, `Late_Blight`).
-2. Run `python train.py`
-3. A `model.pth` file will be generated and picked up by `/ml-model/app.py`.
+Default URL:
 
-## API Documentation
+```text
+http://localhost:5173
+```
 
-The Node.js backend (`http://localhost:3000`) exposes the following endpoints for the frontend:
+---
 
-### 1. `POST /api/predict`
-Uploads an image for disease detection and returns the primary CNN diagnosis, and optionally an AI recommendation if confidence is low.
+# Model Training
 
-- **Required Fields**: 
-  - `image` (Type: File): The leaf image file to be analyzed. Must be `.jpg`, `.jpeg`, or `.png`.
+1. Download the PlantVillage Dataset.
+2. Place dataset inside:
 
-- **Request Example**: 
-  `multipart/form-data` payload containing the `image` field.
+```text
+ml-model/dataset/
+```
 
-- **Success Response (200 OK) Example**:
+Dataset Structure:
+
+```text
+dataset/
+├── Healthy/
+├── Early_Blight/
+└── Late_Blight/
+```
+
+3. Train the model:
+
+```bash
+python train.py
+```
+
+4. A trained model file (`model.pth`) will be generated automatically.
+
+---
+
+# API Documentation
+
+## POST /api/predict
+
+Uploads a leaf image and returns disease prediction.
+
+### Request
+
+```multipart/form-data
+image: File
+```
+
+### Success Response
+
 ```json
 {
   "disease": "Early Blight",
   "confidence": 92.5,
   "severity": "Severe",
   "treatment": "Remove affected lower leaves. Apply copper fungicide.",
-  "top_predictions": [
-    { "label": "Early Blight", "confidence": 92.5 },
-    { "label": "Late Blight", "confidence": 7.5 }
-  ],
   "source": "local_model"
 }
 ```
-*(If the CNN confidence is < 70%, the response will also include an `ai_recommendation` JSON object.)*
 
-- **Error Responses**:
-  - **400 Bad Request**: `{ "error": "Invalid file type. Only PNG, JPG, and JPEG are allowed." }`
-  - **503 Service Unavailable**: `{ "error": "AI Inference Engine (Flask) is offline or unavailable." }`
-  - **504 Gateway Timeout**: `{ "error": "AI Inference request timed out. Image may be too large or server is under heavy load." }`
+### Error Responses
 
-### 2. `GET /api/history`
-Retrieves a list of all past predictions saved in the MongoDB database.
+```json
+{
+  "error": "Invalid file type"
+}
+```
 
-- **Required Fields**: None.
+```json
+{
+  "error": "AI Inference Engine unavailable"
+}
+```
 
-- **Success Response (200 OK) Example**:
+---
+
+## GET /api/history
+
+Returns previous predictions stored in MongoDB.
+
+### Success Response
+
 ```json
 [
   {
-    "_id": "60a7d9f...",
-    "imageUrl": "/uploads/leaf-1621588.jpg",
+    "_id": "123456",
     "disease": "Early Blight",
     "confidence": 92.5,
-    "severity": "Severe",
-    "createdAt": "2023-10-25T14:32:00.000Z"
+    "severity": "Severe"
   }
 ]
 ```
 
-- **Error Responses**:
-  - **500 Internal Server Error**: `{ "error": "Failed to fetch history" }`
+---
+
+# Future Enhancements
+
+* Multi-crop disease support
+* Real-time camera detection
+* Weather-based disease prediction
+* Farmer dashboard analytics
+* Mobile application support
+* Multilingual recommendations
+
+---
+
+# Author
+
+**Siddhant Balaso Shinde**
+
+* GitHub: https://github.com/shindesiddhant-415
+* LinkedIn: https://www.linkedin.com/in/siddhant-shinde-36b621377/
+* Email: [shindesiddhant415@gmail.com](mailto:shindesiddhant415@gmail.com)
+
+---
+
+# License
+
+This project is developed for educational and academic purposes at MIT Academy of Engineering.
